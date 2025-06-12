@@ -49,9 +49,17 @@ confirmBtn.addEventListener("click", (event) => {
 });
 
 function displayBook() {
-  for (let index = 0; index < myLibrary.length; index++) {
-    console.log(myLibrary[index]);
-  }
+  const book = myLibrary[myLibrary.length - 1];
+  const bookCard = document.createElement("div");
+  bookCard.className = "card";
+
+  const bookInfo = document.createElement("p");
+  bookInfo.className = "book-details";
+  bookInfo.textContent = book.info();
+
+  bookCard.appendChild(bookInfo);
+
+  const addBookCard = document.getElementById("addBook").parentElement;
+
+  Library.insertBefore(bookCard, addBookCard);
 }
-
-
