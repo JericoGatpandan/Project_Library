@@ -9,11 +9,35 @@
 
   <body>
     <h1>Library</h1>
-    <dialog>
-      <button autofocus>Close</button>
-      <p>This modal dialog has a groovy backdrop!</p>
+    <dialog id="dialog">
+      <form>
+        <p>
+          <label for="title">Title</label>
+          <input type="text" class="title" name="title" />
+        </p>
+        <p>
+          <label for="author">Author</label>
+          <input type="text" class="author" name="author" />
+        </p>
+        <p>
+          <label for="pages">Pages</label>
+          <input type="number" class="pages" name="pages" />
+        </p>
+        <p>
+          <label for="read">Read</label>
+          <input type="checkbox" class="read" name="read" />
+        </p>
+        <div>
+          <button value="cancel" formmethod="dialog">Cancel</button>
+          <button id="confirmBtn" value="default">Confirm</button>
+        </div>
+      </form>
     </dialog>
-    <button>Add Book</button>
+    <p>
+      <button id="addBook">Add Book</button>
+    </p>
+    <output></output>
+    <div class="Library"></div>
     <!-- Link to js-->
     <script src="script.js"></script>
   </body>
