@@ -49,17 +49,43 @@ confirmBtn.addEventListener("click", (event) => {
 });
 
 function displayBook() {
-  const book = myLibrary[myLibrary.length - 1];
-  const bookCard = document.createElement("div");
-  bookCard.className = "card";
+  const addBookCard =
+    document.querySelector.getElementById("addBook").parentElement;
 
-  const bookInfo = document.createElement("p");
-  bookInfo.className = "book-details";
-  bookInfo.textContent = book.info();
+  Array.from(Library.children).forEach((child) => {
+    if (child !== addBookCard) {
+      Library.removeChild(child);
+    }
+  });
+  myLibrary.forEach((book, index) => {
+    const bookCard = document.createElement("div");
+    bookCard.className = "card";
 
-  bookCard.appendChild(bookInfo);
+    const bookInfo = document.createElement("div");
+    bookInfo.className = "book-details";
+    // bookInfo.textContent = book.info();
+    bookInfo.innerHTML = `
+    <img src="img/Book-red.svg" alt="">
+    <p class="title-text"><strong>${titleValue.value}</strong></p>
+    <p class="author-text">Author: ${authorValue.value}</p>
+    <p class="pages-text">Pages: ${pagesValue.value}</p>
+    <div class="btn">
+      <button class="read-btn">${book.read === "Read" ? "Mark as Unread" : "Mark as Read"}</button>
+      <button class="delete-btn">DELETE</button>
+    </div>
+  `;
 
-  const addBookCard = document.getElementById("addBook").parentElement;
+    
 
-  Library.insertBefore(bookCard, addBookCard);
+    bookCard.appendChild(bookInfo);
+    Library.insertBefore(bookCard, addBookCard);
+  });
 }
+
+addBookToLibrary("The Hobbit", "J.R.R. Tolkien", 310, "Read");
+addBookToLibrary("1984", "George Orwell", 328, "Read");
+addBookToLibrary("To Kill a Mockingbird", "Harper Lee", 281, "Not Read");
+addBookToLibrary("The Great Gatsby", "F. Scott Fitzgerald", 180, "Read");
+addBookToLibrary("Moby Dick", "Herman Melville", 635, "Not Read");
+addBookToLibrary("Pride and Prejudice", "Jane Austen", 279, "Read");
+displayBook();
