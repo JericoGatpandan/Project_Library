@@ -5,38 +5,35 @@ function Book(name, author, pages, read) {
   this.author = author;
   this.pages = pages;
   this.read = read;
+  this.id = crypto.randomUUID();
+  this.info = function () {
+    return (
+      this.id +
+      " " +
+      this.name +
+      " " +
+      this.author +
+      " " +
+      this.pages +
+      " " +
+      this.read
+    );
+  };
 }
-const form = document.getElementById("form");
-let nameInput = prompt("Name");
-let authorInput = prompt("Author");
-let pagesInput = prompt("Pages");
-let readInput = prompt("Read");
 
-form.addEventListener("submit", (e) => {
-  e.preventDefault();
-});
-
-function addBookToLibrary(name, author, pages, read) {
-  const newBook = new Book(name, author, pages, read);
+function addBookToLibrary(name, author, pages, read, id) {
+  const newBook = new Book(name, author, pages, read, id);
   myLibrary.push(newBook);
 }
 
-addBookToLibrary(nameInput, authorInput, pagesInput, readInput);
+const dialog = document.querySelector("dialog");
+const showButton = document.querySelector("dialog + button");
+const closeButton = document.querySelector("dialog button");
 
-// addBook.addEventListener("click", () => {
-//   addBookToLibrary(
-//     nameInput.value,
-//     authorInput.value,
-//     pagesInput.value,
-//     readInput.value
-//   );
-// });
+showButton.addEventListener("click", () => {
+  dialog.showModal();
+});
 
-function displayBook() {
-  for (let index = 0; index < myLibrary.length; index++) {
-    const element = myLibrary[index];
-    console.log(element);
-  }
-}
-
-displayBook();
+closeButton.addEventListener("click", () => {
+  dialog.close();
+});
