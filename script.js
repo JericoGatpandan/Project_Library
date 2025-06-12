@@ -49,33 +49,47 @@ confirmBtn.addEventListener("click", (event) => {
 });
 
 function displayBook() {
-  const addBookCard =
-    document.querySelector.getElementById("addBook").parentElement;
-
+  // Remove all book cards except the "Add Book" card
+  const addBookCard = document.getElementById("addBook").parentElement;
+  // Remove all children except addBookCard
   Array.from(Library.children).forEach((child) => {
     if (child !== addBookCard) {
       Library.removeChild(child);
     }
   });
-  myLibrary.forEach((book, index) => {
+
+  // Add a card for each book
+  myLibrary.forEach((book, idx) => {
     const bookCard = document.createElement("div");
     bookCard.className = "card";
 
     const bookInfo = document.createElement("div");
     bookInfo.className = "book-details";
-    // bookInfo.textContent = book.info();
     bookInfo.innerHTML = `
-    <img src="img/Book-red.svg" alt="">
-    <p class="title-text"><strong>${titleValue.value}</strong></p>
-    <p class="author-text">Author: ${authorValue.value}</p>
-    <p class="pages-text">Pages: ${pagesValue.value}</p>
-    <div class="btn">
-      <button class="read-btn">${book.read === "Read" ? "Mark as Unread" : "Mark as Read"}</button>
-      <button class="delete-btn">DELETE</button>
-    </div>
-  `;
+      <img src="img/Book-red.svg" alt="" class=".book-img">
+      <p class="title-text"><strong>${book.name}</strong></p>
+      <p class="author-text">Author: ${book.author}</p>
+      <p class="pages-text">Pages: ${book.pages}</p>
+      <p class="read-text">Status: ${book.read}</p>
+      <div class="btn">
+        <button class="read-btn">${
+          book.read === "Read" ? "Mark as Unread" : "Mark as Read"
+        }</button>
+        <button class="delete-btn">Delete</button>
+      </div>
+    `;
 
-    
+    // Read toggle
+    bookInfo.querySelector(".read-btn").addEventListener("click", () => {
+      book.read = book.read === "Read" ? "Not Read" : "Read";
+      displayBook();
+    });
+
+    // Delete
+    bookInfo.querySelector(".delete-btn").addEventListener("click", () => {
+      myLibrary.splice(idx, 1);
+      displayBook();
+    });
 
     bookCard.appendChild(bookInfo);
     Library.insertBefore(bookCard, addBookCard);
@@ -83,9 +97,6 @@ function displayBook() {
 }
 
 addBookToLibrary("The Hobbit", "J.R.R. Tolkien", 310, "Read");
-addBookToLibrary("1984", "George Orwell", 328, "Read");
-addBookToLibrary("To Kill a Mockingbird", "Harper Lee", 281, "Not Read");
-addBookToLibrary("The Great Gatsby", "F. Scott Fitzgerald", 180, "Read");
 addBookToLibrary("Moby Dick", "Herman Melville", 635, "Not Read");
 addBookToLibrary("Pride and Prejudice", "Jane Austen", 279, "Read");
 displayBook();
