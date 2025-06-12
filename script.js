@@ -21,12 +21,18 @@ const dialog = document.getElementById("dialog");
 const outputBox = document.querySelector("output");
 const confirmBtn = document.querySelector("#confirmBtn");
 
-const titleValue = document.querySelector(".title");
-const authorValue = document.querySelector(".author");
-const pagesValue = document.querySelector(".pages");
-const readValue = document.querySelector(".read");
+const titleValue = document.querySelector("#title");
+const authorValue = document.querySelector("#author");
+const pagesValue = document.querySelector("#pages");
+const readValue = document.querySelector("#read");
 
 const Library = document.querySelector(".Library");
+const readCheckbox = document.getElementById("read");
+const readStatusText = document.getElementById("read-status-text");
+
+readCheckbox.addEventListener("change", () => {
+  readStatusText.textContent = readCheckbox.checked ? "Read" : "Not Read";
+});
 
 addBookBtn.addEventListener("click", () => {
   titleValue.value = "";
@@ -36,8 +42,22 @@ addBookBtn.addEventListener("click", () => {
   dialog.showModal();
 });
 
+const cancelBtn = dialog.querySelector('button[value="cancel"]');
+cancelBtn.addEventListener("click", () => {
+  dialog.close();
+});
+
 confirmBtn.addEventListener("click", (event) => {
   event.preventDefault();
+
+  const title = titleValue.value.trim();
+  const author = authorValue.value.trim();
+  const pages = pagesValue.value.trim();
+
+  if (!title || !author || !pages) {
+    alert("Please fill in all fields before submitting.");
+    return;
+  }
   addBookToLibrary(
     titleValue.value,
     authorValue.value,
@@ -97,6 +117,6 @@ function displayBook() {
 }
 
 addBookToLibrary("The Hobbit", "J.R.R. Tolkien", 310, "Read");
-addBookToLibrary("Moby Dick", "Herman Melville", 635, "Not Read");
+addBookToLibrary("The Life of Me", "Jerico Gatpandan", 635, "Not Read");
 addBookToLibrary("Pride and Prejudice", "Jane Austen", 279, "Read");
 displayBook();
