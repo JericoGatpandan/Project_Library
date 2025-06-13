@@ -86,31 +86,49 @@ function displayBook() {
     const bookInfo = document.createElement("div");
     bookInfo.className = "book-details";
     bookInfo.innerHTML = `
-      <button class="delete-btn"><span class="material-symbols-outlined">close</span></button>
+        <button class="delete-btn"><span class="material-symbols-outlined">close</span></button>
 
-      <img src="img/Book-red.svg" alt="" class=".book-img">
-       
-      <p class="title-text"><strong>${book.name}</strong></p>
-      <p class="author-text">${book.author}</p>
-      <p class="pages-text">${book.pages}</p>
-      <p class="read-text">Status: ${book.read}</p>
-      <div class="btn">
-        <button class="read-btn">${
-          book.read === "Read" ? "Not Read" : "Read"
-        }</button>
-      </div>
-    `;
+        <img src="img/Book-red.svg" alt="" class=".book-img">
+        
+        <p class="title-text"><strong>${book.name}</strong></p>
+        <p class="author-text">${book.author}</p>
+        <p class="pages-text">${book.pages} pages</p>
+        <p class="read-text ${
+          book.read === "Read" ? "read" : "not-read"
+        }">Status: ${book.read}</p>
+        <div class="btn">
+          <button class="read-btn ${
+            book.read === "Read" ? "read" : "not-read"
+          }">Read</button>
+        </div>
+
+        
+      `;
 
     // Read toggle
-    bookInfo.querySelector(".read-btn").addEventListener("click", () => {
+    const readBtn = bookInfo.querySelector(".read-btn");
+    const statusText = bookInfo.querySelector(".read-text");
+
+    readBtn.addEventListener("click", () => {
       book.read = book.read === "Read" ? "Not Read" : "Read";
-      displayBook();
+
+      statusText.textContent = `Status: ${book.read}`;
+      statusText.className = `read-text ${
+        book.read === "Read" ? "read" : "not-read"
+      }`;
+
+      readBtn.className = `read-btn ${
+        book.read === "Read" ? "read" : "not-read"
+      }`;
     });
 
     // Delete
     bookInfo.querySelector(".delete-btn").addEventListener("click", () => {
-      myLibrary.splice(idx, 1);
-      displayBook();
+      const bookIndex = myLibrary.findIndex((b) => b.id === book.id);
+      if (bookIndex !== -1) {
+        myLibrary.splice(bookIndex, 1);
+        displayBook();
+      }
     });
 
     bookCard.appendChild(bookInfo);
@@ -118,7 +136,13 @@ function displayBook() {
   });
 }
 
-addBookToLibrary("The Hobbit", "J.R.R. Tolkien", 310, "Read");
-addBookToLibrary("The Life of Me", "Jerico Gatpandan", 635, "Not Read");
-addBookToLibrary("Pride and Prejudice", "Jane Austen", 279, "Read");
+addBookToLibrary(
+  "How I Survived College with Instant Noodles",
+  "Jerico Gatpandan",
+  694,
+  "Read"
+);
+addBookToLibrary("Silent Sigma vs Giga Compiler", "Jeri-Chad", 404, "Not Read");
+addBookToLibrary("The Backroom of My Brain", "Sus Programmer", 1337, "Read");
+
 displayBook();
