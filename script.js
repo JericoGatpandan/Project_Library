@@ -86,16 +86,18 @@ function displayBook() {
     const bookInfo = document.createElement("div");
     bookInfo.className = "book-details";
     bookInfo.innerHTML = `
+      <button class="delete-btn"><span class="material-symbols-outlined">close</span></button>
+
       <img src="img/Book-red.svg" alt="" class=".book-img">
+       
       <p class="title-text"><strong>${book.name}</strong></p>
-      <p class="author-text">Author: ${book.author}</p>
-      <p class="pages-text">Pages: ${book.pages}</p>
+      <p class="author-text">${book.author}</p>
+      <p class="pages-text">${book.pages}</p>
       <p class="read-text">Status: ${book.read}</p>
       <div class="btn">
         <button class="read-btn">${
-          book.read === "Read" ? "Mark as Unread" : "Mark as Read"
+          book.read === "Read" ? "Not Read" : "Read"
         }</button>
-        <button class="delete-btn">Delete</button>
       </div>
     `;
 
