@@ -1,12 +1,19 @@
 const myLibrary = [];
 
-function Book(name, author, pages, read) {
-  this.name = name;
-  this.author = author;
-  this.pages = pages;
-  this.read = read;
-  this.id = crypto.randomUUID();
-  this.info = function () {
+class Book {
+  constructor(name, author, pages, read, id) {
+    this.name = name;
+    this.author = author;
+    this.pages = pages;
+    this.read = read;
+    this.id = crypto.randomUUID();
+
+  }
+  toggleRead() {
+    this.read = this.read === "Read" ? "Not Read" : "Read";
+  }
+
+  info() {
     return this.name + " " + this.author + " " + this.pages + " " + this.read;
   };
 }
@@ -93,13 +100,11 @@ function displayBook() {
         <p class="title-text"><strong>${book.name}</strong></p>
         <p class="author-text">${book.author}</p>
         <p class="pages-text">${book.pages} pages</p>
-        <p class="read-text ${
-          book.read === "Read" ? "read" : "not-read"
-        }">Status: ${book.read}</p>
+        <p class="read-text ${book.read === "Read" ? "read" : "not-read"
+      }">Status: ${book.read}</p>
         <div class="btn">
-          <button class="read-btn ${
-            book.read === "Read" ? "read" : "not-read"
-          }">Read</button>
+          <button class="read-btn ${book.read === "Read" ? "read" : "not-read"
+      }">Read</button>
         </div>
 
         
@@ -110,16 +115,15 @@ function displayBook() {
     const statusText = bookInfo.querySelector(".read-text");
 
     readBtn.addEventListener("click", () => {
-      book.read = book.read === "Read" ? "Not Read" : "Read";
+      book.toggleRead();
+
 
       statusText.textContent = `Status: ${book.read}`;
-      statusText.className = `read-text ${
-        book.read === "Read" ? "read" : "not-read"
-      }`;
+      statusText.className = `read-text ${book.read === "Read" ? "read" : "not-read"
+        }`;
 
-      readBtn.className = `read-btn ${
-        book.read === "Read" ? "read" : "not-read"
-      }`;
+      readBtn.className = `read-btn ${book.read === "Read" ? "read" : "not-read"
+        }`;
     });
 
     // Delete
